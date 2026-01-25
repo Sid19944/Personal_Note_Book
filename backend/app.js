@@ -3,15 +3,19 @@ const app = express();
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import dotenv from "dotenv"
+dotenv.config("./.env")
 
 app.use(express.json());
+
+console.log(process.env.FRONTEND_URL)
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      process.env.ADMIN_URL,
       process.env.FRONTEND_URL,
     ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
 );
