@@ -1,0 +1,32 @@
+import express from "express";
+const app = express();
+
+import cookieParser from "cookie-parser";
+import cors from "cors";
+
+app.use(express.json());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      process.env.ADMIN_URL,
+      process.env.FRONTEND_URL,
+    ],
+    credentials: true,
+  }),
+);
+
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+import UserRoute from "./src/routes/user.route.js";
+app.use("/auth/v1/user", UserRoute);
+
+import NoteRoute from "./src/routes/note.route.js";
+app.use("/api/v1/note", NoteRoute);
+
+// middleware for handle error
+import { erroMiddleware } from "./src/utils/ErrorHandler.js";
+app.use(erroMiddleware);
+
+export default app;
