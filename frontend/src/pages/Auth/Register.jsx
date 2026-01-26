@@ -147,7 +147,7 @@ function Register() {
       </div>
 
       <img
-        src="/hero.png"
+        src="/bg.avif"
         alt="Image"
         className="lg:w-1/2 object-cover  hidden lg:block"
       />
