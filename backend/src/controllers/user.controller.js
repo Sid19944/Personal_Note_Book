@@ -42,11 +42,25 @@ const registerUser = asyncHandler(async (req, res, next) => {
     return next(new ErrorHandler("Internal Server Error", 500));
   }
 
-  return res.status(statusCode.OK).json({
-    success: true,
-    message: "User Register Successfully",
-    user: user,
-  });
+  return res
+    .status(statusCode.OK)
+    .cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(Date.now() + 12 * 60 * 60 * 1000),
+      sameSite: "none",
+    })
+    .cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      sameSite: "none",
+    })
+    .json({
+      success: true,
+      message: "User Register Successfully",
+      user: user,
+    });
 });
 
 const loginUser = asyncHandler(async (req, res, next) => {
