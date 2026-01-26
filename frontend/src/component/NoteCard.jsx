@@ -41,7 +41,7 @@ function NoteCard() {
   }, [Object.values(note).length, noteError, isUpdated]);
 
   return (
-    <div className="bg-[url('/public/bg.jpg')] h-screen flex flex-col bg-cover bg-no-repeat outline-1 text-black p-1">
+    <div className="bg-[url('/public/notebg.jpg')] h-screen flex flex-col bg-cover bg-no-repeat outline-1 text-black p-1">
       <nav className="p-2 outline-1 mb-2 rounded-lg bg-amber-600 flex justify-between">
         <div className="flex gap-2">
           <h1 className="font-semibold">Title : </h1>
