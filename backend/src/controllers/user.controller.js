@@ -41,6 +41,8 @@ const registerUser = asyncHandler(async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler("Internal Server Error", 500));
   }
+  const { accessToken, refreshToken } =
+    await generateAccessAndRefreshToken(user);
 
   return res
     .status(statusCode.OK)
