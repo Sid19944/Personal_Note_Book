@@ -8,9 +8,11 @@ import {
 } from "../store/slices/note.sclice";
 import { ToastContainer, toast } from "react-toastify";
 
+import Loading from "../utils/Loading";
+
 function NoteCard() {
   const dispatch = useDispatch();
-  const { note, noteError, isUpdated } = useSelector((state) => state.note);
+  const { note, noteError, isUpdated, loading } = useSelector((state) => state.note);
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -69,6 +71,7 @@ function NoteCard() {
         onChange={(e) => setContent(e.target.value)}
       ></textarea>
       <ToastContainer />
+      {loading? <Loading text="Loading..."/>:""}
     </div>
   );
 }

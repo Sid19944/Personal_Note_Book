@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import LoginIcon from "@mui/icons-material/Login";
+import Loading from "../../utils/Loading";
 import { login } from "../../store/slices/user.slice";
 
 function Login() {
@@ -15,7 +15,7 @@ function Login() {
     password: "",
   });
 
-  const { isAuthenticated, message, error } = useSelector(
+  const { isAuthenticated, message, error, loading } = useSelector(
     (state) => state.user,
   );
   const dispatch = useDispatch();
@@ -93,7 +93,6 @@ function Login() {
             type="submit"
             onClick={handleSubmit}
             disabled={
-              // loading ||
               loginDate.email === "" ||
               loginDate.password === "" ||
               loginDate.password.length < 8
@@ -101,7 +100,6 @@ function Login() {
             className="w-full block text-center bg-blue-400 font-semibold py-2 text-black hover:rounded-lg hover:bg-blue-600 hover:text-white cursor-pointer disabled:cursor-not-allowed"
           >
             Login
-            {/* {loading ? "" : <LoginIcon />} */}
           </button>
         </form>
       </div>
@@ -112,7 +110,7 @@ function Login() {
         className="lg:w-1/2 object-cover  hidden lg:block"
       />
       <ToastContainer />
-      {/* {loading ? <Loading text="Logging..." /> : ""} */}
+      {loading ? <Loading text="Logging..." /> : ""}
     </div>
   );
 }

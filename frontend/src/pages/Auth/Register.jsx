@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Loading from "../../utils/Loading.jsx"
 
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../../store/slices/user.slice.js";
@@ -14,7 +15,8 @@ function Register() {
     password: "",
   });
 
-  const {message,error} = useSelector((state) => state.user);
+  const {isAuthenticated,message,error,loading} = useSelector((state) => state.user);
+  const navigate = useNavigate()
 
   const dispatch = useDispatch();
 
@@ -34,13 +36,16 @@ function Register() {
   };
 
   useEffect(()=>{
+    if(isAuthenticated){
+      navigate("/")
+    }
     if(error){
       toast.error(error,{position : "bottom-left"})
     }
     if(message){
       toast.success(message,{position : "bottom-left"})
     }
-  },[dispatch,error])
+  },[dispatch,error, isAuthenticated])
 
   return (
     <div className=" h-screen font-serif flex">
@@ -124,14 +129,16 @@ function Register() {
 
           <button
             type="submit"
-            // disabled={
-            //   loading ||
-            //   loginDate.email === "" ||
-            //   loginDate.password === "" ||
-            //   loginDate.password.length < 8
-            // }
+            disabled={
+              loading ||
+              data.email === "" ||
+              data.password === "" ||
+              data.password.length < 8 ||
+              data.username === "" ||
+              data.name === ""
+            }
             onClick={handleSubmit}
-            className="w-full block text-center bg-blue-400 font-semibold py-2 text-black hover:rounded-lg hover:bg-blue-600 hover:text-white cursor-pointer disabled:cursor-not-allowed"
+            className="w-full block text-center bg-blue-400 font-semibold py-2 text-black hover:rounded-lg hover:bg-blue-600 hover:text-white cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-600"
           >
             Register
             {/* {loading ? "" : <LoginIcon />} */}
@@ -145,7 +152,7 @@ function Register() {
         className="lg:w-1/2 object-cover  hidden lg:block"
       />
       <ToastContainer />
-      {/* {loading ? <Loading text="Logging..." /> : ""} */}
+      {loading ? <Loading text="Registering..." /> : ""}
     </div>
   );
 }

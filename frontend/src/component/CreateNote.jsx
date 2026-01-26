@@ -4,9 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { createNote } from "../store/slices/note.sclice";
 import { ToastContainer, toast } from "react-toastify";
 
+import Loading from "../utils/Loading";
+
 function CreateNote() {
   const dispatch = useDispatch();
-  const { note } = useSelector((state) => state.note);
+  const { note, noteError, loading } = useSelector((state) => state.note);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const textRef = useRef(null);
@@ -21,7 +23,6 @@ function CreateNote() {
     navigate("/");
   }
 
-  const { noteError } = useSelector((state) => state.note);
 
   useEffect(() => {
     if (textRef.current) {
@@ -68,6 +69,7 @@ function CreateNote() {
         onChange={(e) => setContent(e.target.value)}
       ></textarea>
       <ToastContainer/>
+      {loading ? <Loading text="Creating..."/>:""}
     </div>
   );
 }

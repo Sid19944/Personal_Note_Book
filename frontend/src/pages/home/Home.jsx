@@ -12,13 +12,15 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
 import { logout } from "../../store/slices/user.slice";
 
+import Loading from "../../utils/Loading";
+
 function Home() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
 
   const { notes, noteMessage } = useSelector((state) => state.note);
-  const { isAuthenticated, user, message, error } = useSelector(
+  const { isAuthenticated, user, message, error,loading } = useSelector(
     (state) => state.user,
   );
 
@@ -112,6 +114,7 @@ function Home() {
       </div>
 
       <ToastContainer />
+      {loading ? <Loading text="Loading..." /> : ""}
     </div>
   );
 }

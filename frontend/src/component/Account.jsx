@@ -11,12 +11,14 @@ import { toast, ToastContainer } from "react-toastify";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import PasswordIcon from "@mui/icons-material/Password";
 
+import Loading from "../utils/Loading";
+
 function Account() {
   const [active, setActive] = useState("updateProfile");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isUpdated, error, isAuthenticated } = useSelector(
+  const { user, isUpdated, error, isAuthenticated, loading } = useSelector(
     (state) => state.user,
   );
   const [name, setName] = useState("");
@@ -168,6 +170,7 @@ function Account() {
         </div>
       </div>
       <ToastContainer />
+      {loading ? <Loading text="Loading..." /> : ""}
     </div>
   );
 }
