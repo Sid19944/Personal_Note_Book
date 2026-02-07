@@ -69,6 +69,5 @@ userSchema.methods.generateRefreshToken = function () {
   );
 };
 
-// userSchema.methods.ge
 
 export const User = mongoose.model("User", userSchema);
